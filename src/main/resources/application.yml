@@ -1,0 +1,24 @@
+server:
+  port: 8001
+spring:
+  controller:
+    path-prefix: /flowable
+  application:
+    name: flowable-demo
+  datasource:
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    #        local remote
+    url: jdbc:sqlserver://10.22.88.200:48000;databaseName=FSM_TH_TEST2
+    username: svc_fsm
+    password: Password1
+
+flowable:
+  async-executor-activate: false #close schedule job
+  #  When set databaseSchemaUpdate ture
+  #  flowable detects inconsistencies between the library and database table structures,
+  # it will automatically upgrade the database table structure to a new version
+  database-schema-update: true
+  history-level: full
+  process:
+    servlet:
+      path: /service
