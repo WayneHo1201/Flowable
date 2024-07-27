@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:flowable="http://flowable.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.flowable.org/processdef">
+  <process id="movement_demo" name="test movement" isExecutable="true">
+    <documentation>movement_demo</documentation>
+    <startEvent id="Event_0xo7h2o" name="movement start">
+      <outgoing>Flow_0mr6vug</outgoing>
+    </startEvent>
+    <userTask id="Activity_0slsmgr" name="submit" flowable:candidateGroups="AGCY">
+      <extensionElements>
+        <modeler:initiator-can-complete xmlns:modeler="http://flowable.org/modeler"><![CDATA[false]]></modeler:initiator-can-complete>
+        <flowable:taskListener event="complete" delegateExpression="${taskSubmitListener}"></flowable:taskListener>
+      </extensionElements>
+      <incoming>Flow_0mr6vug</incoming>
+      <outgoing>Flow_18arxut</outgoing>
+    </userTask>
+    <userTask id="Activity_1vyysq5" name="approve" flowable:candidateGroups="MG">
+      <extensionElements>
+        <modeler:initiator-can-complete xmlns:modeler="http://flowable.org/modeler"><![CDATA[false]]></modeler:initiator-can-complete>
+        <flowable:taskListener event="complete" delegateExpression="${taskApproveListener}"></flowable:taskListener>
+      </extensionElements>
+      <incoming>Flow_18arxut</incoming>
+      <outgoing>Flow_1mvu4zj</outgoing>
+    </userTask>
+    <sequenceFlow id="Flow_0mr6vug" sourceRef="Event_0xo7h2o" targetRef="Activity_0slsmgr" />
+    <sequenceFlow id="Flow_18arxut" sourceRef="Activity_0slsmgr" targetRef="Activity_1vyysq5" />
+    <endEvent id="Event_06ecq1b" name="movement end">
+      <incoming>Flow_1mvu4zj</incoming>
+    </endEvent>
+    <sequenceFlow id="Flow_1mvu4zj" sourceRef="Activity_1vyysq5" targetRef="Event_06ecq1b" />
+  </process>
+  <bpmndi:BPMNDiagram id="BpmnDiagram_1">
+    <bpmndi:BPMNPlane id="BpmnPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="Event_0xo7h2o_di" bpmnElement="Event_0xo7h2o">
+        <omgdc:Bounds x="152" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0slsmgr_di" bpmnElement="Activity_0slsmgr">
+        <omgdc:Bounds x="270" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1vyysq5_di" bpmnElement="Activity_1vyysq5">
+        <omgdc:Bounds x="460" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_06ecq1b_di" bpmnElement="Event_06ecq1b">
+        <omgdc:Bounds x="682" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0mr6vug_di" bpmnElement="Flow_0mr6vug">
+        <omgdi:waypoint x="188" y="120" />
+        <omgdi:waypoint x="270" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_18arxut_di" bpmnElement="Flow_18arxut">
+        <omgdi:waypoint x="370" y="120" />
+        <omgdi:waypoint x="460" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1mvu4zj_di" bpmnElement="Flow_1mvu4zj">
+        <omgdi:waypoint x="560" y="120" />
+        <omgdi:waypoint x="682" y="120" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

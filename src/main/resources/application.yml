@@ -1,16 +1,16 @@
 server:
   port: 8001
+  servlet:
+    context-path: /flowable
 spring:
-  controller:
-    path-prefix: /flowable
   application:
     name: flowable-demo
+
   datasource:
-    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-    #        local remote
-    url: jdbc:sqlserver://10.22.88.200:48000;databaseName=FSM_TH_TEST2
-    username: svc_fsm
-    password: Password1
+    url: jdbc:mysql://localhost:3306/flowable?useSSL=false&serverTimezone=UTC
+    username: root
+    password: stormshensu
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
 flowable:
   async-executor-activate: false #close schedule job
