@@ -16,6 +16,7 @@
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
+        <maven.compiler.release>21</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring-boot.version>3.2.7</spring-boot.version>
         <flowable.version>7.0.1</flowable.version>
@@ -27,10 +28,15 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.microsoft.sqlserver</groupId>-->
+<!--            <artifactId>mssql-jdbc</artifactId>-->
+<!--            <version>${sqlserver.version}</version>-->
+<!--        </dependency>-->
         <dependency>
-            <groupId>com.microsoft.sqlserver</groupId>
-            <artifactId>mssql-jdbc</artifactId>
-            <version>${sqlserver.version}</version>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.23</version>
         </dependency>
         <!-- lombok -->
         <dependency>
