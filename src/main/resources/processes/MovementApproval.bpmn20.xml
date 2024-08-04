@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:flowable="http://flowable.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.flowable.org/processdef">
+  <process id="Movement_Approval" isExecutable="true">
+    <startEvent id="StartEvent_1y45yut" name="start">
+      <outgoing>Flow_15rqzfk</outgoing>
+    </startEvent>
+    <userTask id="Activity_0wb968n" name="submit"  flowable:candidateGroups="SUBMIT">
+      <extensionElements>
+        <modeler:initiator-can-complete xmlns:modeler="http://flowable.org/modeler"><![CDATA[false]]></modeler:initiator-can-complete>
+        <flowable:taskListener event="complete" delegateExpression="${taskSubmitListener}"></flowable:taskListener>
+      </extensionElements>
+      <incoming>Flow_15rqzfk</incoming>
+      <outgoing>Flow_1ewwcqo</outgoing>
+    </userTask>
+    <sequenceFlow id="Flow_15rqzfk" sourceRef="StartEvent_1y45yut" targetRef="Activity_0wb968n" />
+    <inclusiveGateway id="Gateway_0tvs6yk">
+      <incoming>Flow_1ewwcqo</incoming>
+      <outgoing>Flow_1jdkim6</outgoing>
+      <outgoing>Flow_05pv2f6</outgoing>
+      <outgoing>Flow_0jbm3un</outgoing>
+    </inclusiveGateway>
+    <sequenceFlow id="Flow_1ewwcqo" sourceRef="Activity_0wb968n" targetRef="Gateway_0tvs6yk" />
+    <userTask id="Activity_1cpbylu" name="approve1" flowable:candidateGroups="APPROVAL1">
+      <extensionElements>
+        <modeler:initiator-can-complete xmlns:modeler="http://flowable.org/modeler"><![CDATA[false]]></modeler:initiator-can-complete>
+        <flowable:taskListener event="complete" delegateExpression="${taskApproveListener}"></flowable:taskListener>
+      </extensionElements>
+      <incoming>Flow_0jbm3un</incoming>
+      <outgoing>Flow_0f7h7rh</outgoing>
+    </userTask>
+    <userTask id="Activity_0o4yvfz" name="approve2" flowable:candidateGroups="APPROVAL2">
+      <extensionElements>
+        <modeler:initiator-can-complete xmlns:modeler="http://flowable.org/modeler"><![CDATA[false]]></modeler:initiator-can-complete>
+        <flowable:taskListener event="complete" delegateExpression="${taskApproveListener}"></flowable:taskListener>
+      </extensionElements>
+      <incoming>Flow_1jdkim6</incoming>
+      <outgoing>Flow_0jrqqn3</outgoing>
+    </userTask>
+    <userTask id="Activity_0n99s99" name="approve3" flowable:candidateGroups="APPROVAL3">
+      <extensionElements>
+        <modeler:initiator-can-complete xmlns:modeler="http://flowable.org/modeler"><![CDATA[false]]></modeler:initiator-can-complete>
+        <flowable:taskListener event="complete" delegateExpression="${taskApproveListener}"></flowable:taskListener>
+      </extensionElements>
+      <incoming>Flow_05pv2f6</incoming>
+      <outgoing>Flow_1tt5us4</outgoing>
+    </userTask>
+    <!-- approval1 -->
+    <sequenceFlow id="Flow_0jbm3un" name="Amount>10000000" sourceRef="Gateway_0tvs6yk" targetRef="Activity_1cpbylu">
+      <conditionExpression xsi:type="tFormalExpression">${Amount&gt;10000000}</conditionExpression>
+    </sequenceFlow>
+    <!-- approval2 -->
+    <sequenceFlow id="Flow_1jdkim6" name="Amount>50000000" sourceRef="Gateway_0tvs6yk" targetRef="Activity_0o4yvfz">
+      <conditionExpression xsi:type="tFormalExpression">${Amount&gt;50000000}</conditionExpression>
+    </sequenceFlow>
+    <!-- approval3 -->
+    <sequenceFlow id="Flow_05pv2f6"  name="Amount>100000000" sourceRef="Gateway_0tvs6yk" targetRef="Activity_0n99s99">
+      <conditionExpression xsi:type="tFormalExpression">${Amount&gt;100000000}</conditionExpression>
+    </sequenceFlow>
+    <inclusiveGateway id="Gateway_0gdg8fp">
+      <incoming>Flow_0f7h7rh</incoming>
+      <incoming>Flow_0jrqqn3</incoming>
+      <incoming>Flow_1tt5us4</incoming>
+      <outgoing>Flow_1goblgz</outgoing>
+    </inclusiveGateway>
+
+    <sequenceFlow id="Flow_0f7h7rh" sourceRef="Activity_1cpbylu" targetRef="Gateway_0gdg8fp"/>
+    <sequenceFlow id="Flow_0jrqqn3" sourceRef="Activity_0o4yvfz" targetRef="Gateway_0gdg8fp"/>
+    <sequenceFlow id="Flow_1tt5us4"  sourceRef="Activity_0n99s99" targetRef="Gateway_0gdg8fp"/>
+
+    <userTask id="Activity_0wyxbv5" name="approve4" flowable:candidateGroups="APPROVAL4">
+      <extensionElements>
+        <modeler:initiator-can-complete xmlns:modeler="http://flowable.org/modeler"><![CDATA[false]]></modeler:initiator-can-complete>
+        <flowable:taskListener event="complete" delegateExpression="${taskApproveListener}"></flowable:taskListener>
+      </extensionElements>
+      <incoming>Flow_1goblgz</incoming>
+      <outgoing>Flow_08gv992</outgoing>
+    </userTask>
+    <sequenceFlow id="Flow_1goblgz" sourceRef="Gateway_0gdg8fp" targetRef="Activity_0wyxbv5" />
+    <endEvent id="Event_1387bwj" name="end">
+      <incoming>Flow_08gv992</incoming>
+    </endEvent>
+    <sequenceFlow id="Flow_08gv992" sourceRef="Activity_0wyxbv5" targetRef="Event_1387bwj" />
+  </process>
+  <bpmndi:BPMNDiagram id="BpmnDiagram_1">
+    <bpmndi:BPMNPlane id="BpmnPlane_1" bpmnElement="Movement_Approval">
+      <bpmndi:BPMNShape id="StartEvent_1y45yut_di" bpmnElement="StartEvent_1y45yut">
+        <omgdc:Bounds x="152" y="272" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="159" y="315" width="23" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0wb968n_di" bpmnElement="Activity_0wb968n">
+        <omgdc:Bounds x="270" y="250" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0vd0opo" bpmnElement="Activity_1cpbylu">
+        <omgdc:Bounds x="570" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0kk5lsh" bpmnElement="Activity_0o4yvfz">
+        <omgdc:Bounds x="570" y="250" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0j1nx3y" bpmnElement="Activity_0n99s99">
+        <omgdc:Bounds x="570" y="420" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0tvs6yk_di" bpmnElement="Gateway_0tvs6yk">
+        <omgdc:Bounds x="445" y="265" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1edzckp" bpmnElement="Gateway_0gdg8fp">
+        <omgdc:Bounds x="735" y="265" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0hf6jm7" bpmnElement="Activity_0wyxbv5">
+        <omgdc:Bounds x="890" y="250" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1387bwj_di" bpmnElement="Event_1387bwj">
+        <omgdc:Bounds x="1072" y="272" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="1081" y="315" width="19" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_15rqzfk_di" bpmnElement="Flow_15rqzfk">
+        <omgdi:waypoint x="188" y="290" />
+        <omgdi:waypoint x="270" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ewwcqo_di" bpmnElement="Flow_1ewwcqo">
+        <omgdi:waypoint x="370" y="290" />
+        <omgdi:waypoint x="445" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1jdkim6_di" bpmnElement="Flow_1jdkim6">
+        <omgdi:waypoint x="495" y="290" />
+        <omgdi:waypoint x="570" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_05pv2f6_di" bpmnElement="Flow_05pv2f6">
+        <omgdi:waypoint x="470" y="315" />
+        <omgdi:waypoint x="470" y="460" />
+        <omgdi:waypoint x="570" y="460" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0jbm3un_di" bpmnElement="Flow_0jbm3un">
+        <omgdi:waypoint x="470" y="265" />
+        <omgdi:waypoint x="470" y="120" />
+        <omgdi:waypoint x="570" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0f7h7rh_di" bpmnElement="Flow_0f7h7rh">
+        <omgdi:waypoint x="670" y="120" />
+        <omgdi:waypoint x="760" y="120" />
+        <omgdi:waypoint x="760" y="265" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0jrqqn3_di" bpmnElement="Flow_0jrqqn3">
+        <omgdi:waypoint x="670" y="290" />
+        <omgdi:waypoint x="735" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1tt5us4_di" bpmnElement="Flow_1tt5us4">
+        <omgdi:waypoint x="670" y="460" />
+        <omgdi:waypoint x="760" y="460" />
+        <omgdi:waypoint x="760" y="315" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1goblgz_di" bpmnElement="Flow_1goblgz">
+        <omgdi:waypoint x="785" y="290" />
+        <omgdi:waypoint x="890" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_08gv992_di" bpmnElement="Flow_08gv992">
+        <omgdi:waypoint x="990" y="290" />
+        <omgdi:waypoint x="1072" y="290" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
